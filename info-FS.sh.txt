@@ -1,0 +1,45 @@
+info-FS.sh
+
+#!/bin/bash
+# Find System Hostname
+echo -e "\nHostname:"
+hostname
+
+# Find Operating System
+echo -e "\nOperating System:"
+echo /etc/os-release | grep -E '^PRETTY_NAME=' | cut -d '=' -f 2 | tr -d '"'
+
+#How long system has been online
+echo -e "\nSystem Uptime:"
+uptime -p
+
+
+# See Kernel Version
+echo -e "\nLinux Kernel Version:"
+uname -r
+
+# Find CPU Information
+echo -e "\nCPU Information:"
+lscpu | grep -E '^Model name|^CPU\(s\)|^Architecture'
+
+#Find General memory information (free/available) in human-readable form
+echo -e "\nMemory Information (Human-readable):"
+free -h
+
+# Find Network Information
+echo -e "\nNetwork Interface Information:"
+ip addr show
+
+#Filesystem utilization and types in human-readable form
+echo -e "\nFilesystem Utilization and Types:"
+df -hT
+
+# Last five lines of general log file having "error" (case-insensitive)
+echo -e "\nLast 5 log Entries with 'error' (case-insensitive):"
+journalctl | grep -i "error" | fail -n 5
+
+
+
+
+
+
